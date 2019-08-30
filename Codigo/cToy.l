@@ -26,7 +26,7 @@ SEMICOLON	[;]
 
 {DIGIT}"."{DIGIT}* 	{printf("[Número float, %s (%f)]\n", yytext, atof(yytext));}
 
-if|else|int|char|float|	{
+if|else|int|char|float	{
 					printf("[Palavra reservada, %s]\n ", yytext);}
 
 {ID}				{printf("[Identificador, %s]\n", yytext);}
