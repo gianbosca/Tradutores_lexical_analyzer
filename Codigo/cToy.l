@@ -5,6 +5,7 @@
 #include <math.h>
 %}
 
+/* definitions */
 DIGIT		[0-9]
 ID			[a-z][a-z0-9]*
 EQUAL 		=
@@ -20,6 +21,7 @@ KEYWORD		if|else|for|while|do|switch|return|null|int|float|double|string|bool|br
 ARITH_OP 	"+"|"-"|"*"|"/"|"%"
 REL_OP 		"<"|"<="|"=="|">="|">"
 
+/* rules */
 %%
 
 {EQUAL}		{ printf("[EQUAL, %s]\n", yytext);}
