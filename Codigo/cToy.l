@@ -1,7 +1,6 @@
 /* Scanner para uma linguagem C simplificado */
 /* "{"[\^{}}\n]*"}"	its old code */
 
-
 %option noyywrap
 
 %{
@@ -9,9 +8,8 @@
 %}
 
 /* definitions */
-COMMENT 	"/*".*"*/"
 L_COMMENT   "//".*
-N_COMMENT	"/*".*.\n"*/"
+N_COMMENT	"/*"([^*]|"*"+[^/*])*"*"+"/"
 DIGIT		[0-9]
 ID			[a-z|A-Z][a-z0-9A-Z]*
 EQUAL 		=
@@ -25,15 +23,19 @@ COMMA		","
 SEMICOLON	";"
 INT 		[+|-]?(0|[1-9][0-9]*)
 FLOAT 		[+|-]?[1-9][0-9]*"."[0-9]*
-KEYWORD		if|else|for|while|do|switch|return|null|int|float|double|string|bool|break|case|void
-ARITH_OP 	"+"|"-"|"%"|"/"|"*"
-REL_OP 		"<"|"<="|"=="|">="|">"|"?"|":"
+FUNCTION	[a-z|A-Z][a-z0-9A-Z]*[(].*[)]
+KEYWORD		if|else|for|while|do|switch|return|null|int|float|double|string|bool|break|case|void|#include
+ARITH_OP 	"+"|"-"|"*"|"/"|"%"
+REL_OP 		"<"|"<="|"=="|">="|">"|"?"|":"|"&&"|"||"	
+INCLUDES	"<".*">"
+STRING   "\"".*"\""
 
 /* rules */
 %%
-{COMMENT} 	{printf("[ COMMENT ]\n"); }
-{L_COMMENT} {printf("[ L_COMMENT ]\n"); }
-{N_COMMENT} {printf("[ N_COMMENT ]\n"); }
+{L_COMMENT} { }
+{N_COMMENT} { }
+{FUNCTION}  { printf("[ FUNCTION, %s ]\n", yytext); }
+{INCLUDES}	{ printf("[ INCLUDE, %s ]\n", yytext); }
 {EQUAL}		{ printf("[ EQUAL, %s ]\n", yytext);}
 {COMMA}		{ printf("[ COMMA, %s ]\n", yytext);}
 {SEMICOLON}	{ printf("[ SEMICOLON, %s ]\n", yytext);}
@@ -50,6 +52,7 @@ REL_OP 		"<"|"<="|"=="|">="|">"|"?"|":"
 {L_SQUARE} 	{ printf("[ L_SQUARE, %s ]\n", yytext); }
 {R_SQUARE} 	{ printf("[ R_SQUARE, %s ]\n", yytext); }
 
+[ \t\n]+	
 .	printf("Caractere nao reconhecido: %s\n", yytext);
 
 %%
