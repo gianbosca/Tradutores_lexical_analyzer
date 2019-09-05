@@ -9,6 +9,9 @@
 %}
 
 /* definitions */
+COMMENT 	"/*".*"*/"
+L_COMMENT   "//".*
+N_COMMENT	"/*".*.\n"*/"
 DIGIT		[0-9]
 ID			[a-z|A-Z][a-z0-9A-Z]*
 EQUAL 		=
@@ -23,12 +26,14 @@ SEMICOLON	";"
 INT 		[+|-]?(0|[1-9][0-9]*)
 FLOAT 		[+|-]?[1-9][0-9]*"."[0-9]*
 KEYWORD		if|else|for|while|do|switch|return|null|int|float|double|string|bool|break|case|void
-ARITH_OP 	"+"|"-"|"*"|"/"|"%"
+ARITH_OP 	"+"|"-"|"%"|"/"|"*"
 REL_OP 		"<"|"<="|"=="|">="|">"|"?"|":"
 
 /* rules */
 %%
-
+{COMMENT} 	{printf("[ COMMENT ]\n"); }
+{L_COMMENT} {printf("[ L_COMMENT ]\n"); }
+{N_COMMENT} {printf("[ N_COMMENT ]\n"); }
 {EQUAL}		{ printf("[ EQUAL, %s ]\n", yytext);}
 {COMMA}		{ printf("[ COMMA, %s ]\n", yytext);}
 {SEMICOLON}	{ printf("[ SEMICOLON, %s ]\n", yytext);}
@@ -44,8 +49,6 @@ REL_OP 		"<"|"<="|"=="|">="|">"|"?"|":"
 {R_BRACKET} { printf("[ R_BRACKET, %s ]\n", yytext); }
 {L_SQUARE} 	{ printf("[ L_SQUARE, %s ]\n", yytext); }
 {R_SQUARE} 	{ printf("[ R_SQUARE, %s ]\n", yytext); }
-
-[ \t\n]+		
 
 .	printf("Caractere nao reconhecido: %s\n", yytext);
 

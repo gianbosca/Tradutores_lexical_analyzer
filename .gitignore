@@ -1,3 +1,5 @@
 *.c
 *.out
 *.exe
+
+Codigo/out.txt
