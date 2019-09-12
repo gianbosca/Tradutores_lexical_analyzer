@@ -1,6 +1,3 @@
-/* Scanner para uma linguagem C simplificado */
-/* "{"[\^{}}\n]*"}"	its old code */
-
 %option noyywrap
 
 %{
