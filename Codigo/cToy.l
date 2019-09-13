@@ -52,7 +52,7 @@ ADR_VAR		"&"{ID}
 {STRING}	{ printf("[ STRING: %s ]\n", yytext); }
 {ADR_VAR}	{ printf("[ ADDRESS: %s ]\n", yytext); }
 
-[ \t\n]+	
+[ \t\r\n]+	
 .	printf("Caractere nao reconhecido: %s\n", yytext);
 
 %%
